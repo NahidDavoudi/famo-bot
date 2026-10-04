@@ -1,4 +1,4 @@
-python-telegram-bot[webhooks]>=20.0
+python-telegram-bot[webhooks]>=21.0
 Flask>=3.0
+python-dotenv>=1.0.0
 loguru>=0.7.0
-dotenv>=1.0.0

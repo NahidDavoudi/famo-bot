@@ -1,2 +1,11 @@
 .env
 passenger_wsgi.py
+logs/
+__pycache__/
+*.py[cod]
+*.log
+venv/
+.venv/
+.vscode/
+.idea/
+.DS_Store
