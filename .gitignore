@@ -9,3 +9,6 @@ venv/
 .vscode/
 .idea/
 .DS_Store
+public/
+tmp/
+stderr.log

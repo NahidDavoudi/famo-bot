@@ -1,16 +1,9 @@
-"""Professional logging setup using loguru.
+"""Professional logging setup using loguru."""
 
-Features:
-- Colored console output for development
-- Rotating file logs (10 MB per file)
-- Automatic compression of old logs (zip)
-- 7-day retention
-- Separate error log file
-- Structured format with timestamp, level, module, function, line
-"""
-
+import logging
 import sys
 from pathlib import Path
+
 from loguru import logger
 
 from config import config
@@ -45,7 +38,7 @@ logger.add(
     level=config.LOG_LEVEL,
     colorize=True,
     backtrace=True,
-    diagnose=False,   # در پروداکشن False باشد تا اطلاعات حساس لو نرود
+    diagnose=False,
 )
 
 # --- ۲) فایل لاگ عمومی (چرخشی) ---
@@ -53,11 +46,11 @@ logger.add(
     LOG_DIR / "bot_{time:YYYY-MM-DD}.log",
     format=FILE_FORMAT,
     level=config.LOG_LEVEL,
-    rotation="10 MB",       # هر فایل حداکثر ۱۰ مگابایت
-    retention="7 days",     # نگه‌داری ۷ روز
-    compression="zip",      # فشرده‌سازی فایل‌های قدیمی
+    rotation="10 MB",
+    retention="7 days",
+    compression="zip",
     encoding="utf-8",
-    enqueue=True,           # ایمن برای چند ترد
+    enqueue=True,
     backtrace=True,
     diagnose=False,
 )
@@ -68,36 +61,41 @@ logger.add(
     format=FILE_FORMAT,
     level="ERROR",
     rotation="10 MB",
-    retention="30 days",    # خطاها بیشتر نگه‌داری شوند
+    retention="30 days",
     compression="zip",
     encoding="utf-8",
     enqueue=True,
     backtrace=True,
-    diagnose=True,          # در فایل خطا، جزئیات بیشتر مفید است
+    diagnose=True,
 )
 
-# --- ۴) جایگزینی لاگر استاندارد پایتون با loguru ---
-class InterceptHandler:
-    """Redirect stdlib logging to loguru."""
 
-    @staticmethod
-    def emit(record) -> None:
+# --- ۴) جایگزینی لاگر استاندارد پایتون با loguru ---
+class InterceptHandler(logging.Handler):
+    """Redirect stdlib logging records to loguru."""
+
+    def emit(self, record: logging.LogRecord) -> None:
+        # Get corresponding Loguru level if it exists
         try:
             level = logger.level(record.levelname).name
         except ValueError:
             level = record.levelno
-        frame, depth = sys._getframe(6), 6
-        while frame and frame.f_code.co_filename == __file__:
+
+        # Find caller from where the logged message originated
+        frame, depth = logging.currentframe(), 2
+        while frame and frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back
-            depth -= 1
+            depth += 1
+
         logger.opt(depth=depth, exception=record.exc_info).log(
             level, record.getMessage()
         )
 
 
-import logging  # noqa: E402
+logging.basicConfig(
+    handlers=[InterceptHandler()],
+    level=0,
+    force=True,
+)
 
-logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
-
-# لاگر آماده برای import در سایر ماژول‌ها
 __all__ = ["logger"]
