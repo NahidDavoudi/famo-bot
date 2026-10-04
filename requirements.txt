@@ -1,5 +1,4 @@
-aiogram==3.0
-python-dotenv==1.0.0
-pydantic-settings>=2.1.0
-requests>=2.31.0
-loguru>=0.7.3
+python-telegram-bot[webhooks]>=20.0
+Flask>=3.0
+loguru>=0.7.0
+dotenv>=1.0.0
