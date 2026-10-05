@@ -18,15 +18,6 @@ class Config:
     API_KEY: str = os.getenv("API_KEY", "")
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
-    @classmethod
-    def validate(cls) -> None:
-        required = ["BOT_TOKEN", "BASE_URL", "WEBHOOK_SECRET", "ADMIN_KEY", "API_KEY"]
-        missing = [k for k in required if not getattr(cls, k)]
-        if missing:
-            raise ValueError(
-                f"متغیرهای محیطی زیر تنظیم نشده‌اند: {', '.join(missing)}"
-            )
 
 
 config = Config()
-config.validate()

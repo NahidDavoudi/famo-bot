@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 import api
-import handlers.keyboards as kb
+from handlers import keyboeards as kb
 
 HELP_STUDENT = (
     "هر پیام، عکس یا فایلی که اینجا بفرستی، به‌عنوان گزارش امروزت برای "

@@ -9,7 +9,7 @@ from telegram.ext import (
     filters,
 )
 
-import handlers.keyboards as kb
+from handlers import keyboeards as kb
 from config import config
 from logging_config import logger
 from event_loop import run_async

@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 import api
-import handlers.keyboards as kb
+from handlers import keyboeards as kb
 from handlers import commands, messages
 
 
