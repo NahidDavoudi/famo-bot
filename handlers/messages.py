@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 import api
-import keyboards as kb
+import handlers.keyboards as kb
 from handlers import commands
 
 MAX_FILE = 20 * 1024 * 1024  # سقف دانلود بات‌ها در تلگرام
