@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from loguru import logger
 
-from keyboards import main_menu_keyboard, bottom_menu_keyboard
+from handlers.keyboards import main_menu_keyboard, bottom_menu_keyboard
 
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
