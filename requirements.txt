@@ -1,4 +1,4 @@
-aiogram>=3.13,<4
-fastapi>=0.110
-a2wsgi>=1.10
-python-dotenv>=1.0
+python-telegram-bot[webhooks]>=21.0
+Flask>=3.0
+python-dotenv>=1.0.0
+loguru>=0.7.0
