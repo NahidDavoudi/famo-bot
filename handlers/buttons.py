@@ -1,12 +1,12 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 from loguru import logger
-from keyboards import bottom_menu_keyboard
+
 
 async def menu_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle clicks on main menu buttons."""
+    """Handle clicks on main menu inline buttons."""
     query = update.callback_query
-    await query.answer()  # مهم: حتماً answer کنید تا دکمه از حالت لود خارج شود
+    await query.answer()
 
     logger.info(f"کلیک روی {query.data} از کاربر {query.from_user.id}")
 
@@ -17,11 +17,5 @@ async def menu_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
             "📚 راهنما:\n"
             "/start - شروع\n"
             "/help - راهنما\n"
-            "/stats - آمار"
+            "/menu - منو"
         )
-
-async def menu_reply(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(
-        "منو فعال شد:",
-        reply_markup=bottom_menu_keyboard(),
-    )

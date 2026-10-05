@@ -1,16 +1,18 @@
-"""Command handlers: /start, /help."""
-
 from telegram import Update
 from telegram.ext import ContextTypes
 from loguru import logger
-from keyboards import main_menu_keyboard
+
+from keyboards import main_menu_keyboard, bottom_menu_keyboard
+
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Show the main menu."""
+    logger.info(f"/menu از کاربر {update.effective_user.id}")
     await update.message.reply_text(
         "منوی اصلی:",
         reply_markup=main_menu_keyboard(),
     )
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle /start command."""
@@ -20,17 +22,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         f"Hello {user.first_name}!\n"
         "Welcome to the famoacademies bot.\n"
         "To start using the bot, connect your account by clicking the button below.\n"
-        "Press /help to see the help message."
+        "Press /help to see the help message.",
+        reply_markup=bottom_menu_keyboard(),
     )
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Handle /help command."""
     logger.info(f"/help از کاربر {update.effective_user.id}")
     await update.message.reply_text(
         "📚 راهنما:\n"
         "/start - شروع\n"
         "/login - ورود به حساب کاربری\n"
-        "/help - همین راهنما\n\n"
+        "/help - همین راهنما\n"
+        "/menu - منوی شیشه‌ای\n"
     )
-
-    

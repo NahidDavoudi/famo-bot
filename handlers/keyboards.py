@@ -1,5 +1,9 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram import KeyboardButton, ReplyKeyboardMarkup
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    KeyboardButton,
+    ReplyKeyboardMarkup,
+)
 
 
 def bottom_menu_keyboard() -> ReplyKeyboardMarkup:
@@ -10,11 +14,14 @@ def bottom_menu_keyboard() -> ReplyKeyboardMarkup:
     ]
     return ReplyKeyboardMarkup(
         keyboard,
-        one_time_keyboard=True,   # همیشه نمایش داده شود
+        resize_keyboard=True,
+        one_time_keyboard=False,
         input_field_placeholder="یک گزینه انتخاب کنید...",
     )
 
+
 def main_menu_keyboard() -> InlineKeyboardMarkup:
+    """Inline menu with a few buttons."""
     keyboard = [
         [
             InlineKeyboardButton("📊 آمار", callback_data="menu_stats"),
